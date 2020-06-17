@@ -1,0 +1,15 @@
+using namespace std;
+#include iostream
+
+int main(){
+int x,copy;
+  cout<<"Number: ";
+  cin>>x;
+  while(a>0){
+    int digit = a%10;
+    sum+=digit*digit*digit;
+    a/=10;
+  }
+  if(sum==copy)
+    cout<<"Armstrong");
+}
