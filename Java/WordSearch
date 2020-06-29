@@ -1,0 +1,193 @@
+import java.util.*;
+import java.io.*; 
+
+public class WordSearch
+{
+    private String[][] m;
+
+    public WordSearch( int size, String str )
+    {
+    int c = 0;
+    m = new String[size][size];
+    for(int k = 0;k<size;k++)
+      for(int i = 0;i<size;i++)  {    
+         m[k][i]=(str.substring(c,c+1));
+         c++;}
+    }
+
+    public boolean isFound( String word )
+    {
+    	
+      for(int r = 0;r<m.length;r++)
+      {
+       // k=1;
+         for(int c = 0;c<m.length;c++)
+   
+     { 
+      if(checkRight(word,r,c))return true;
+      if(checkLeft(word,r,c))return true;
+      if(checkUp(word,r,c))return true;
+      if(checkDown(word,r,c))return true;
+      if(checkDiagUpRight(word,r,c))return true;
+      if(checkDiagUpLeft(word,r,c))return true;
+      if(checkDiagDownLeft(word,r,c))return true;
+      if(checkDiagDownRight(word,r,c))return true;
+            }}
+      return false;
+    }
+
+	public boolean checkRight(String w, int r, int c)
+   {
+		if(inBounds(r,c)==false)
+         return false;
+      int k = 0;
+      if(w.length()==1 && w.equals(m[r][c]))
+         return true;
+      if(inBounds(r+1,c)&&k<w.length()&&(m[r++][c]).equals(w.substring(k++,k)))
+      {
+         return checkRight(w.substring(k++,k),r,c);
+           
+        
+         }
+      return false;
+	}
+
+	public boolean checkLeft(String w, int r, int c)
+	{
+   if(inBounds(r,c)==false)
+         return false;
+
+   int k = 0;
+      if(w.length()==1&&w.equals(m[r][c]))
+         return true;
+      if(inBounds(r-1,c)&&m[r--][c].equals(w.substring(k++,k))&&k<w.length())
+      {
+         return checkLeft(w.substring(k++,k),r,c);
+           
+        
+         }
+      return false;
+	}
+
+	public boolean checkUp(String w, int r, int c)
+	{
+   if(inBounds(r,c)==false)
+         return false;
+
+   int k = 0;
+      if(w.length()==1&&w.equals(m[r][c]))
+         return true;
+      if(inBounds(r,c+1)&&k<w.length()&&m[r][c++].equals(w.substring(k++,k)))
+      {
+         return checkUp(w.substring(k++,k),r,c);
+           
+        
+         }
+      return false;
+
+   	}
+
+	public boolean checkDown(String w, int r, int c)
+   {
+   if(inBounds(r,c)==false)
+         return false;
+
+     int k = 0;
+      if(w.length()==1&&w.equals(m[r][c]))
+         return true;
+      if(inBounds(r,c+1)&&k<w.length()&&m[r][c--].equals(w.substring(k++,k)))
+      {
+         return checkDown(w.substring(k++,k),r,c);
+           
+        
+         }
+      return false;
+	}
+
+	public boolean checkDiagUpRight(String w, int r, int c)
+	{
+     if(inBounds(r,c)==false)
+         return false;
+
+     int k = 0;
+      if(w.length()==1&&w.equals(m[r][c]))
+         return true;
+      if(inBounds(r+1,c+1)&&k<w.length()&&m[r++][c++].equals(w.substring(k++,k)))
+      {
+         return checkDiagUpRight(w.substring(k++,k),r,c);
+           
+        
+         }
+      return false;
+	}
+
+	public boolean checkDiagUpLeft(String w, int r, int c)
+	{
+   if(inBounds(r,c)==false)
+         return false;
+
+    int k = 0;
+      if(w.length()==1&&w.equals(m[r][c]))
+         return true;
+      if(inBounds(r-1,c+1)&&k<w.length()&&m[r--][c++].equals(w.substring(k++,k)))
+      {
+         return checkDiagUpLeft(w.substring(k++,k),r,c);
+           
+        
+         }
+      return false;
+	}
+
+	public boolean checkDiagDownLeft(String w, int r, int c)
+   {
+   if(inBounds(r,c)==false)
+         return false;
+
+    int k = 0;
+      if(w.length()==1&&w.equals(m[r][c]))
+         return true;
+      if(inBounds(r-1,c-1)&&k<w.length()&&m[r--][c--].equals(w.substring(k++,k)))
+      {
+         return checkDiagDownLeft(w.substring(k++,k),r,c);
+           
+        
+         }
+      return false;
+	}
+
+	public boolean checkDiagDownRight(String w, int r, int c)
+	{
+   if(inBounds(r,c)==false)
+         return false;
+
+    int k = 0;
+      if(w.length()==1&&w.equals(m[r][c]))
+         return true;
+      if(inBounds(r+1,c-1)&&k<w.length()&&m[r++][c--].equals(w.substring(k++,k)))
+      {
+         return checkDiagDownRight(w.substring(k++,k),r,c);
+           
+        
+         }
+      return false;
+	}
+   public boolean inBounds(int r, int c)
+   {
+      if(r>=0&&c>=0&&r<m.length&&c<m.length)
+         return true;
+      return false;
+   
+   }
+
+    public String toString()
+    {
+ 		String out = "";
+      for(int r = 0;r<m.length;r++)
+      {
+         for(int c = 0;c<m.length;c++)
+            out+=m[r][c]+ " " ;
+            out+="\n";
+      }
+      return out;
+    }
+}
