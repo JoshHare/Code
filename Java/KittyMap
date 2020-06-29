@@ -1,0 +1,257 @@
+import java.util.Scanner;
+import static java.lang.System.*;
+
+
+public class KittyMap
+{
+	private boolean[][] kittyGrid;
+
+	/*
+	 *this constructor loads in random true and false values
+	 */
+	public KittyMap(int rows, int cols)
+	{
+   kittyGrid = new boolean[rows][cols];
+   
+   for(int row = 0; row<kittyGrid.length;row++)
+      for(int col = 0;col<kittyGrid[row].length;col++)
+     {
+         int c = (int)Math.ceil((int)(Math.random()*7));
+         if(c==6)
+            kittyGrid[row][col] = true;
+         else
+            kittyGrid[row][col] =false;
+	   }
+   }
+
+	/*
+	 *this method will call getKittyCountsGrid
+	 *to retrieve the kitty counts for the kittyGrid
+	 */
+	public void printKittyCount()
+	{
+       String output="";
+
+   for(int row = 0; row<kittyGrid.length;row++)
+   {
+         for(int col = 0;col<kittyGrid[row].length;col++)
+         {
+            if(kittyGrid[row][col]==true)
+               output+=1;
+            else
+               output+=0;
+                        }
+            output +="\n";
+		}
+		out.println(output);
+	}
+
+	/*
+	 *this method will calculate the kitty counts for each cell
+	 *if cell is true set int value to 9
+	 *if cell is not true set int value to cnt of kitties in adjacent cells
+	 */
+	private int[][] getKittyCountsGrid()
+	{
+   int[][] numGrid = new int[kittyGrid.length][kittyGrid[0].length];
+      for(int row = 0; row<kittyGrid.length;row++)
+         for(int col = 0;col<kittyGrid[row].length;col++)
+            numGrid[row][col] = getKittyCount(row,col);
+         
+		return numGrid;
+	}
+
+	/*
+	 *this method will return the value of the current cell
+	 *if this cell contains a kitty - return 9
+	 *otherwise - return the cnt of all kitties in adjacent cells
+	 */
+	public int getKittyCount( int r, int c)
+	{
+      int count = 0;
+      if(inBounds(r,c))
+      {
+      if(kittyGrid[r][c] == true)
+         return 9;
+      else
+      {
+         if(inBounds(r-1,c-1)&&kittyGrid[r-1][c-1]==true)
+            count++;
+         if(inBounds(r-1,c)&&kittyGrid[r-1][c]==true)
+            count++;
+         if(inBounds(r-1,c+1)&&kittyGrid[r-1][c+1]==true)
+            count++;
+         if(inBounds(r,c-1)&&kittyGrid[r][c-1] == true)
+            count++;
+         if(inBounds(r,c+1)&&kittyGrid[r][c+1] == true)
+            count++;
+         if(inBounds(r+1,c-1)&&kittyGrid[r+1][c-1] == true)
+            count++;
+         if(inBounds(r-1,c)&&kittyGrid[r+1][c] == true)
+            count++;
+         if(inBounds(r+1,c+1)&&kittyGrid[r+1][c+1] == true)
+            count++;
+		          
+       } 
+      
+    }
+    return count; 
+
+	}
+
+	/*
+	 *check r and c to ensure they are inside the grid
+	 */
+	private boolean inBounds( int r, int c)
+	{
+      if(r<kittyGrid[0].length-1&&c<kittyGrid.length-1&&r>=0&&c>=0)
+         return true;
+		return false;
+         
+	}
+   public String getRobotLocation()
+   {
+   int count = 0;
+   int nr = 0;
+   int nc = 0;
+       for(int r = 0; r<kittyGrid.length;r++)
+         for(int c = 0;c<kittyGrid[r].length;c++)
+            if(checkRobotLocation(r,c)>count)
+            {
+               count = checkRobotLocation(r,c);
+               nr =r;
+               nc = c;
+          }
+          return "The best place to drop a robot is in row " + nr + " and column " +nc + ".";
+
+   }
+   
+   public int checkRobotLocation(int r, int c)
+   {
+      int count = 0;
+               
+            if(inBounds(r,c))
+      {
+    
+         if(inBounds(r-3,c-3)&&getKittyCountsGrid()[r-3][c-3]==9)
+            count++;
+         if(inBounds(r-3,c-2)&&getKittyCountsGrid()[r-3][c-2]==9)
+            count++;
+         if(inBounds(r-3,c-1)&&getKittyCountsGrid()[r-3][c-1]==9)
+            count++;
+         if(inBounds(r-3,c)&&getKittyCountsGrid()[r-3][c]==9)
+            count++;
+         if(inBounds(r-3,c+1)&&getKittyCountsGrid()[r-3][c+1]==9)
+            count++;
+         if(inBounds(r-3,c+2)&&getKittyCountsGrid()[r-3][c+2]==9)
+            count++;
+         if(inBounds(r-3,c+3)&&getKittyCountsGrid()[r-3][c+3]==9)
+            count++;
+         if(inBounds(r-2,c-3)&&getKittyCountsGrid()[r-2][c-3]==9)
+            count++;
+         if(inBounds(r-2,c-2)&&getKittyCountsGrid()[r-2][c-2]==9)
+            count++;
+         if(inBounds(r-2,c-1)&&getKittyCountsGrid()[r-2][c-1]==9)
+            count++;
+         if(inBounds(r-2,c)&&getKittyCountsGrid()[r-2][c]==9)
+            count++;
+         if(inBounds(r-2,c+1)&&getKittyCountsGrid()[r-2][c+1]==9)
+            count++;
+         if(inBounds(r-2,c+2)&&getKittyCountsGrid()[r-2][c+2]==9)
+            count++;
+         if(inBounds(r-2,c+3)&&getKittyCountsGrid()[r-2][c+3]==9)
+            count++;
+         if(inBounds(r-1,c-3)&&getKittyCountsGrid()[r-1][c-3]==9)
+            count++;
+         if(inBounds(r-1,c-2)&&getKittyCountsGrid()[r-1][c-2]==9)
+            count++;
+         if(inBounds(r-1,c-1)&&getKittyCountsGrid()[r-1][c-1]==9)
+            count++;
+         if(inBounds(r-1,c)&&getKittyCountsGrid()[r-1][c]==9)
+            count++;
+         if(inBounds(r-1,c+1)&&getKittyCountsGrid()[r-1][c+1]==9)
+            count++;
+         if(inBounds(r-1,c+2)&&getKittyCountsGrid()[r-1][c+2]==9)
+            count++;
+         if(inBounds(r-1,c+3)&&getKittyCountsGrid()[r-1][c+3]==9)
+            count++;
+         if(inBounds(r,c-3)&&getKittyCountsGrid()[r][c-3]==9)
+            count++;
+         if(inBounds(r,c-2)&&getKittyCountsGrid()[r][c-2]==9)
+            count++;
+         if(inBounds(r,c-1)&&getKittyCountsGrid()[r][c-1]==9)
+            count++;
+         if(inBounds(r,c+1)&&getKittyCountsGrid()[r][c+1]==9)
+            count++;
+         if(inBounds(r,c+2)&&getKittyCountsGrid()[r][c+2]==9)
+            count++;
+         if(inBounds(r,c+3)&&getKittyCountsGrid()[r][c+3]==9)
+         //////////////////////////////////////////////////
+            count++;
+         if(inBounds(r+3,c-3)&&getKittyCountsGrid()[r+3][c-3]==9)
+            count++;
+         if(inBounds(r+3,c-2)&&getKittyCountsGrid()[r+3][c-2]==9)
+            count++;
+         if(inBounds(r+3,c-1)&&getKittyCountsGrid()[r+3][c-1]==9)
+            count++;
+         if(inBounds(r+3,c)&&getKittyCountsGrid()[r+3][c]==9)
+            count++;
+         if(inBounds(r+3,c+1)&&getKittyCountsGrid()[r+3][c+1]==9)
+            count++;
+         if(inBounds(r+3,c+2)&&getKittyCountsGrid()[r+3][c+2]==9)
+            count++;
+         if(inBounds(r+3,c+3)&&getKittyCountsGrid()[r+3][c+3]==9)
+            count++;
+         if(inBounds(r+2,c-3)&&getKittyCountsGrid()[r+2][c-3]==9)
+            count++;
+         if(inBounds(r+2,c-2)&&getKittyCountsGrid()[r+2][c-2]==9)
+            count++;
+         if(inBounds(r+2,c-1)&&getKittyCountsGrid()[r+2][c-1]==9)
+            count++;
+         if(inBounds(r+2,c)&&getKittyCountsGrid()[r+2][c]==9)
+            count++;
+         if(inBounds(r+2,c+1)&&getKittyCountsGrid()[r+2][c+1]==9)
+            count++;
+         if(inBounds(r+2,c+2)&&getKittyCountsGrid()[r+2][c+2]==9)
+            count++;
+         if(inBounds(r+2,c+3)&&getKittyCountsGrid()[r+2][c+3]==9)
+            count++;
+         if(inBounds(r+1,c-3)&&getKittyCountsGrid()[r+1][c-3]==9)
+            count++;
+         if(inBounds(r+1,c-2)&&getKittyCountsGrid()[r+1][c-2]==9)
+            count++;
+         if(inBounds(r+1,c-1)&&getKittyCountsGrid()[r+1][c-1]==9)
+            count++;
+         if(inBounds(r+1,c)&&getKittyCountsGrid()[r+1][c]==9)
+            count++;
+         if(inBounds(r+1,c+1)&&getKittyCountsGrid()[r+1][c+1]==9)
+            count++;
+         if(inBounds(r+1,c+2)&&getKittyCountsGrid()[r+1][c+2]==9)
+            count++;
+         if(inBounds(r+1,c+3)&&getKittyCountsGrid()[r+1][c+3]==9)
+            count++;
+
+       
+      
+    
+          }  
+            return count;
+   }
+
+	/*
+	 *return the kitty grid as a string
+	 */
+	public String toString()
+	{
+   String output="";
+  
+
+   for(int row = 0; row<kittyGrid.length;row++)
+   {
+         for(int col = 0;col<kittyGrid[row].length;col++)
+            output+= getKittyCountsGrid()[row][col];
+            output +="\n";
+		}
+		return output.trim();
+	}
+  }
