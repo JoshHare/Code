@@ -1,0 +1,94 @@
+import java.util.Scanner;
+import java.text.DecimalFormat;
+import java.math.RoundingMode;
+import static java.lang.System.*;
+
+public class Forest
+{
+	private Thing[][] grid;
+   private static DecimalFormat df2 = new DecimalFormat("#.##");
+
+	public Forest(int rows, int cols)
+	{
+		final String[] typeList = "cat dog tree rock".split(" ");
+		final String[] nameList = "a b c d e f g h i j k l m n o p q r t s u v w x y z".split(" ");
+		grid = new Thing[10][10];
+		//load stuff into the grid
+		for(int r = 0; r<grid.length;r++)
+         for(int c = 0;c<grid[r].length;c++)
+            grid[r][c]= new Thing(typeList[(int)Math.floor(Math.random()*3)],nameList[(int)Math.floor(Math.random()*25)],
+  Math.random()*35);
+	}
+
+
+
+	public int setTrappedToNull( )
+	{
+      int count = 0;
+      for(int r = 0; r<grid.length;r++)
+         for(int c = 0;c<grid[r].length;c++)
+            if(isTrapped(r,c))
+               count++;
+		return 0;
+	}
+	
+	  //if location ! a rock && 
+	  //is surrounded by > 5 trees or rocks larger than 10
+	public boolean isTrapped( int r, int c)
+	{
+   int count=0;
+      if(grid[r][c].getType().equals("cat")||grid[r][c].getType().equals("dog"))
+      {
+         if(inBounds(r,c)&&(grid[r][c].getType().equals("tree")||grid[r][c].getType().equals("rock"))&&grid[r][c].getSize()>10)
+            count++;
+          if(inBounds(r+1,c)&&(grid[r+1][c].getType().equals("tree")||grid[r+1][c].getType().equals("rock"))&&grid[r+1][c].getSize()>10)
+            count++;
+          if(inBounds(r+1,c-1)&&(grid[r+1][c-1].getType().equals("tree")||grid[r+1][c-1].getType().equals("rock"))&&grid[r+1][c-1].getSize()>10)
+            count++;
+          if(inBounds(r+1,c+1)&&(grid[r+1][c+1].getType().equals("tree")||grid[r+1][c+1].getType().equals("rock"))&&grid[r+1][c+1].getSize()>10)
+            count++;
+            if(inBounds(r-1,c)&&(grid[r-1][c].getType().equals("tree")||grid[r-1][c].getType().equals("rock"))&&grid[r-1][c].getSize()>10)
+            count++;
+            if(inBounds(r-1,c-1)&&(grid[r-1][c-1].getType().equals("tree")||grid[r-1][c-1].getType().equals("rock"))&&grid[r-1][c-1].getSize()>10)
+            count++;
+            if(inBounds(r-1,c+1)&&(grid[r-1][c+1].getType().equals("tree")||grid[r-1][c+1].getType().equals("rock"))&&grid[r-1][c+1].getSize()>10)
+            count++;
+         if(inBounds(r,c+1)&&(grid[r][c+1].getType().equals("tree")||grid[r][c+1].getType().equals("rock"))&&grid[r][c+1].getSize()>10)
+            count++;
+         if(inBounds(r,c-1)&&(grid[r][c-1].getType().equals("tree")||grid[r][c-1].getType().equals("rock"))&&grid[r][c-1].getSize()>10)
+            count++;
+
+
+
+
+
+}
+   if(count>5)
+      return true;
+		return false;
+	}
+
+	public boolean inBounds( int r, int c)
+	{
+		if(r>0&&c>0&&r<grid.length&&c<grid[0].length)
+         return true;
+      return false;
+	}
+
+
+	public String toString()
+	{
+   String out = "";
+		for(int r = 0; r<grid.length;r++)
+      {
+         for(int c = 0;c<grid[r].length;c++)
+            out+=grid[r][c].toString()+" ";
+         out+="\n";
+      }
+      out+="\n";
+      
+      return out;
+	}
+}
+
+
