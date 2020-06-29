@@ -1,0 +1,60 @@
+import static java.lang.System.*;
+
+public class AtCounter
+{
+   private String[][] atMat;
+
+	public AtCounter()
+	{
+      atMat = new String[10][10];
+      for(int row = 0; row<atMat.length;row++)
+         for(int col = 0; col<atMat[row].length;col++)
+         {
+         int input = (int) Math.round(Math.random());
+
+         if(input ==0)
+            atMat[row][col]= "-";
+         else
+            atMat[row][col]= "@";
+            }
+		//size the matrix
+		//use nested loops to randomly load the matrix
+		//you will need to use Math.random()
+	}
+
+	public int countAts(int r, int c)
+	{
+      int count = 0;
+     if(r>=0&&c>=0&&r<10&&c<10)
+       if(atMat[r][c].equals("@"))
+               {
+                  count++;
+                  atMat[r][c]="-";
+                  count += countAts(r+1,c);
+                  count += countAts(r-1,c);
+                  count += countAts(r,c+1);
+                  count += countAts(r,c-1);
+               }
+		//add in recursive code to count up the # of @s connected
+		//start checking at spot [r,c]
+		return count;
+	}
+
+	/*
+	 *this method will return all values in the matrix
+	 *this method should return a view of the matrix
+	 *that looks like a matrix
+	 */
+	public String toString()
+	{
+      String output= "";
+      for(int row = 0; row<atMat.length;row++)
+      {
+         for(int col = 0; col<atMat[row].length;col++)
+            output+=atMat[row][col] + " ";
+        output+="\n";     
+      }
+    
+		return output;
+	}
+}
