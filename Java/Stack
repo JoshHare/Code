@@ -1,0 +1,77 @@
+class Stack { 
+    static final int max = 1000; 
+    int top; 
+    int a[] = new int[max]; 
+  
+    public Stack() 
+    { 
+        top = -1; 
+    } 
+  
+  
+  
+    public int pop() 
+    { 
+        if (top < 0) 
+        { 
+            System.out.println("Nothing to remove"); 
+            return 0; 
+        } 
+        else 
+        { 
+            int x = a[top--]; 
+            System.out.println(x + " is popped");
+            return x; 
+        } 
+    } 
+  
+    public int top() 
+    { 
+        if (top < 0) { 
+            return 0; 
+        } 
+        else { 
+            int x = a[top]; 
+            return x; 
+        } 
+    } 
+      public boolean push(int x) 
+    { 
+        if (top >= (max - 1)) 
+        { 
+            return false; 
+        } 
+        else 
+        { 
+            a[++top] = x; 
+            return true; 
+        } 
+    } 
+    
+    public boolean isFull()
+    {
+        if(top=max-1)
+            return true;
+        return false;
+    
+    }
+    
+    
+    public boolean isEmpty() 
+    { 
+        if(top<0)
+            return true;
+        return false;
+    } 
+    
+     public static void main(String args[]) 
+    { 
+        Stack s = new Stack(); 
+        s.push(1); 
+        s.push(2); 
+        s.push(3); 
+        s.pop();
+        s.top();
+    } 
+} 
+  
